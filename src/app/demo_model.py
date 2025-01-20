@@ -1,7 +1,7 @@
+# model before training
+
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
-from datasets import load_dataset
-
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
@@ -24,8 +24,8 @@ pipe = pipeline(
     device=device,
 )
 
-dataset = load_dataset("distil-whisper/librispeech_long", "clean", split="validation")
-sample = dataset[0]["audio"]
+def return_answer(file_name: str):
+  result = pipe(file_name, generate_kwargs={"language": "russian"})
+  print(result["text"])
 
-result = pipe(sample, generate_kwargs={"language": "russian"})
-print(result["text"])
+return_answer("Неправильно-1.mp3")
