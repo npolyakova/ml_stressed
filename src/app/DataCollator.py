@@ -1,6 +1,6 @@
-from dataclasses import dataclass
 from typing import Any, Dict, List, Union
-
+import torch
+from src.app.training import processor, model
 
 class DataCollatorSpeechSeq2SeqWithPadding:
     processor: Any
@@ -32,3 +32,8 @@ class DataCollatorSpeechSeq2SeqWithPadding:
         batch["labels"] = labels
 
         return batch
+
+data_collator = DataCollatorSpeechSeq2SeqWithPadding(
+    processor=processor,
+    decoder_start_token_id=model.config.decoder_start_token_id,
+)

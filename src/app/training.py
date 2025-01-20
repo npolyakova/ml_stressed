@@ -1,5 +1,9 @@
 from transformers import WhisperFeatureExtractor, WhisperTokenizer, WhisperProcessor, WhisperForConditionalGeneration, Seq2SeqTrainingArguments, Seq2SeqTrainer
 
+from src.app.DataCollator import data_collator
+from src.app.dataset import common_voice
+from src.app.metrics import compute_metrics
+
 feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-small")
 tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-small", language="russian", task="transcribe")
 processor = WhisperProcessor.from_pretrained("openai/whisper-small", language="russian", task="transcribe")

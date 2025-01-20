@@ -1,4 +1,5 @@
 import evaluate
+from src.app.training import tokenizer
 
 metric = evaluate.load("wer")
 

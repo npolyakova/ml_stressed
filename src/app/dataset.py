@@ -2,21 +2,21 @@ from datasets import Dataset, Audio, DatasetDict
 
 audio_dataset = Dataset.from_dict({
     "audio": [
-        "Запись-_14_.mp3",
-        "Запись-_15_.mp3",
-        "Запись-_16_.mp3",
-        "Запись-_17_.mp3",
-        "Неправильно-1.mp3",
-        "Неправильно-2.wav",
-        "Неправильно-3.mp3",
-        "Неправильно-4.mp3",
-        "Неправильно.mp3",
-        "Правильно-1.mp3",
-        "Правильно-2.wav",
-        "Правильно-3.mp3",
-        "Правильно-4.mp3",
-        "Правильно-5.mp3",
-        "Правильно.mp3"
+        "src/resources/srEdstva/Запись-_14_.mp3",
+        "src/resources/srEdstva/Запись-_15_.mp3",
+        "src/resources/srEdstva/Запись-_16_.mp3",
+        "src/resources/srEdstva/Запись-_17_.mp3",
+        "src/resources/srEdstva/Неправильно-1.mp3",
+        "src/resources/srEdstva/Неправильно-2.wav",
+        "src/resources/srEdstva/Неправильно-3.mp3",
+        "src/resources/srEdstva/Неправильно-4.mp3",
+        "src/resources/srEdstva/Неправильно.mp3",
+        "src/resources/srEdstva/Правильно-1.mp3",
+        "src/resources/srEdstva/Правильно-2.wav",
+        "src/resources/srEdstva/Правильно-3.mp3",
+        "src/resources/srEdstva/Правильно-4.mp3",
+        "src/resources/srEdstva/Правильно-5.mp3",
+        "src/resources/srEdstva/Правильно.mp3"
         ],
     "transalation": [
         "СрЕдства",
@@ -40,10 +40,10 @@ audio_dataset[0]["audio"]
 
 audio_dataset_test = Dataset.from_dict({
     "audio": [
-        "Запись-_14_.mp3",
-        "Неправильно-1.mp3",
-        "Правильно-1.mp3",
-        "Правильно.mp3"
+        "src/resources/srEdstva/Запись-_14_.mp3",
+        "src/resources/srEdstva/Неправильно-1.mp3",
+        "src/resources/srEdstva/Правильно-1.mp3",
+        "src/resources/srEdstva/Правильно.mp3"
         ],
     "transalation": [
         "СрЕдства",
