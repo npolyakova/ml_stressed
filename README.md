@@ -17,6 +17,7 @@
 - *Multi-stage training*
 
 ## Данные
+https://colab.research.google.com/drive/1Mly0VOb2_JryqBZqxRlGnjjeS8xVqm9h?usp=sharing
 Для бейзлайна записываем самостоятельно, а для готового продукта - из внешних источников:
 - Корпусы аудио- и текстовых данных
 - Специализированные орфоэпические словари
