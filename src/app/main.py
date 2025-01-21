@@ -3,10 +3,6 @@ from fastapi import FastAPI, File, UploadFile
 
 app = FastAPI()
 
-@app.get("/")
-async def hello():
-        return "123"
-
 @app.get("/api/words")
 async def get_words():
     with open('words.txt', 'r', encoding='utf-8') as file:
