@@ -4,19 +4,13 @@ from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    html_content = "<h2>Hello METANIT.COM!</h2>"
-    return HTMLResponse(content=html_content)
-
-@app.get("/123")
-async def test(true:int, false:int):
-    a = true
-    b = false
-    c = a + b
-    return {"massage":c}
-
+@app.get("api/words")
+def get_words():
+    with open('words.txt', 'r', encoding='utf-8') as file:
+        data = file.read()
+        return {
+            "words": data.split()
+        }
 
 @app.post("/files/")
 async def create_file(file: Annotated[bytes, File()]):
