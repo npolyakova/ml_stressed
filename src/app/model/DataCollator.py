@@ -1,14 +1,12 @@
-from typing import Any, Dict, List, Union
 import torch
-from src.app.training import processor, model
 
+from dataclasses import dataclass
+from typing import Any, Dict, List, Union
+
+@dataclass
 class DataCollatorSpeechSeq2SeqWithPadding:
     processor: Any
     decoder_start_token_id: int
-
-    def __init__(self, processor: Any, decoder_start_token_id: int):
-      self.processor = processor
-      self.decoder_start_token_id = decoder_start_token_id
 
     def __call__(self, features: List[Dict[str, Union[List[int], torch.Tensor]]]) -> Dict[str, torch.Tensor]:
         # split inputs and labels since they have to be of different lengths and need different padding methods
@@ -32,8 +30,3 @@ class DataCollatorSpeechSeq2SeqWithPadding:
         batch["labels"] = labels
 
         return batch
-
-data_collator = DataCollatorSpeechSeq2SeqWithPadding(
-    processor=processor,
-    decoder_start_token_id=model.config.decoder_start_token_id,
-)

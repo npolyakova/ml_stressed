@@ -28,4 +28,4 @@ def return_answer(file_name: str):
   result = pipe(file_name, generate_kwargs={"language": "russian"})
   print(result["text"])
 
-return_answer("Неправильно-1.mp3")
+return_answer("model/resources/srEdstva/validation/test_1.mp3")
