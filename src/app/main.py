@@ -1,3 +1,4 @@
+import aiofiles
 from fastapi import FastAPI, UploadFile
 from starlette.responses import FileResponse
 
@@ -19,6 +20,11 @@ async def get_words():
             "words": data.split()
         }
 
-@app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile):
-    return {"filename": file.filename}
+@app.post("/uploadfile")
+async def create_upload_file(file: UploadFile, word:str):
+    async with aiofiles.open('src/app/download.mp3', 'wb') as out_file:
+     content = await file.read()  # async read
+     await out_file.write(content)  # async write
+    return {"Result": word}
+
+
