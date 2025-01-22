@@ -2,6 +2,8 @@ import aiofiles
 from fastapi import FastAPI, UploadFile
 from starlette.responses import FileResponse
 
+from demo_model import return_answer
+
 app = FastAPI()
 
 @app.get("/")
@@ -22,9 +24,20 @@ async def get_words():
 
 @app.post("/uploadfile")
 async def create_upload_file(file: UploadFile, word:str):
-    async with aiofiles.open('src/app/download.mp3', 'wb') as out_file:
+    async with aiofiles.open('../../src/app/download.mp3', 'wb') as out_file:
      content = await file.read()  # async read
      await out_file.write(content)  # async write
-    return {"Result": word}
+
+    detected_word = str(return_answer("../../src/app/download.mp3")["result"])
+    if detected_word.endswith(" ") or detected_word.endswith("."):
+        detected_word = detected_word[:-1]
+    if detected_word.startswith(" "):
+        detected_word = detected_word[1:]
+
+    if detected_word == word:
+        return {"Result": "true"}
+    else:
+        print(detected_word)
+        return {"Result": "false"}
 
 
