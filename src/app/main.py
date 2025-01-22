@@ -1,7 +1,15 @@
-from typing import Annotated
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, UploadFile
+from starlette.responses import FileResponse
 
 app = FastAPI()
+
+@app.get("/")
+def index():
+    return FileResponse('../../docs/index.html')
+
+@app.get("/game")
+def index():
+    return FileResponse('../../docs/zapis.html')
 
 @app.get("/api/words")
 async def get_words():
