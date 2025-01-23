@@ -1,22 +1,13 @@
-from transformers import pipeline, WhisperForConditionalGeneration, WhisperProcessor, WhisperFeatureExtractor, \
-    WhisperTokenizer
 import torch
+from transformers import pipeline, AutoProcessor, AutoModelForSpeechSeq2Seq
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
-feature_extractor = WhisperFeatureExtractor.from_pretrained("src/app/model/whisper-small-hi/checkpoint-10")
-tokenizer = WhisperTokenizer.from_pretrained("app/model/whisper-small-hi", language="russian", task="transcribe")
-model = WhisperForConditionalGeneration.from_pretrained("app/model/whisper-small-hi")
-processor = WhisperProcessor.from_pretrained("app/model/whisper-small-hi")
+processor = AutoProcessor.from_pretrained("TigrulyaCat/whisper-small-hi")
+model = AutoModelForSpeechSeq2Seq.from_pretrained("TigrulyaCat/whisper-small-hi")
 
-pipe = pipeline(
-    "automatic-speech-recognition",
-    model=model,
-    tokenizer=tokenizer,
-    feature_extractor=feature_extractor,
-    torch_dtype=torch_dtype,
-)
+pipe = pipeline("automatic-speech-recognition", model="TigrulyaCat/whisper-small-hi")
 
 result = pipe("resources/aeropOrty/validation/test_1.mp3", generate_kwargs={"language": "russian"})
 print(result["text"])

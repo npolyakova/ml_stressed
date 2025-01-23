@@ -79,12 +79,12 @@ training_args = Seq2SeqTrainingArguments(
     generation_max_length=225,
     save_steps=10,
     eval_steps=10,
-    logging_steps=25,
+    logging_steps=5,
     report_to=["tensorboard"],
     load_best_model_at_end=True,
     metric_for_best_model="wer",
     greater_is_better=False,
-    push_to_hub=False,
+    push_to_hub=True,
     remove_unused_columns=False
 )
 
@@ -114,3 +114,4 @@ kwargs = {
 }
 
 trainer.push_to_hub(**kwargs)
+tokenizer.push_to_hub("TigrulyaCat/whisper-small-hi")
