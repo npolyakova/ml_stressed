@@ -11,6 +11,7 @@ from src.app.model.dataset import create_dataset, get_data
 # create datasets
 audio_train, translation_train = get_data('train_data.csv')
 audio_training_dataset = create_dataset(audio_train, translation_train)
+audio_training_dataset.push_to_hub("TigrulyaCat/stressed_syllables")
 
 audio_test, translation_test = get_data('test_data.csv')
 audio_validation_dataset = create_dataset(audio_test, translation_test)
@@ -70,7 +71,7 @@ training_args = Seq2SeqTrainingArguments(
     gradient_accumulation_steps=1,  # increase by 2x for every 2x decrease in batch size
     learning_rate=1e-5,
     warmup_steps=5,
-    max_steps=10,
+    max_steps=1,
     gradient_checkpointing=True,
     fp16=True,
     eval_strategy="steps",
@@ -113,5 +114,5 @@ kwargs = {
     "tasks": "automatic-speech-recognition",
 }
 
+#tokenizer.push_to_hub("TigrulyaCat/whisper-small-hi")
 trainer.push_to_hub(**kwargs)
-tokenizer.push_to_hub("TigrulyaCat/whisper-small-hi")
