@@ -18,5 +18,5 @@ pipe = pipeline(
     torch_dtype=torch_dtype,
 )
 
-result = pipe("resources/srEdstva/validation/test_1.mp3", generate_kwargs={"language": "russian"})
+result = pipe("resources/aeropOrty/validation/test_1.mp3", generate_kwargs={"language": "russian"})
 print(result["text"])
