@@ -21,6 +21,7 @@
 					<button id="stopButton" class="knopka" disabled>СТОП</button>
 					</center>
 			</section>
+			<div id="loading" style="display: none;">Загрузка...</div>
 	<!-- СКРИПТ ДЛЯ ПОЛУЧЕНИЯ СПИСКА СЛОВ С СЕРВЕРА-->
 	<script>
         let words = [];
@@ -66,6 +67,8 @@
         let audioChunks = [];
         let audioBlob;
         let audioStream;
+        let counter = 0;
+
 
         document.getElementById("startButton").onclick = async() => {
 			 // Запрашиваем доступ к микрофону
@@ -81,6 +84,7 @@
                 audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 audioChunks = []; // Очистка массива для следующей записи
                 console.log('Аудио записано:', audioBlob);
+                document.getElementById('loading').style.display = 'block';
             };
 
             mediaRecorder.start();
@@ -88,6 +92,7 @@
 
             document.getElementById("stopButton").disabled = false; // Включаем кнопку "СТОП"
 			if (currentScore >= 20) {
+				alert(counter)
 				currentScore = 0; // Сбрасываем счетчик
 			}
         };
@@ -101,7 +106,6 @@
         }
 
         document.getElementById("stopButton").onclick = async() => {
-
 			mediaRecorder.stop();
 
             // Отключаем микрофон
@@ -154,11 +158,12 @@
                     }
                     json = await response.json();
                     result = json["Result"]
-                    if (result == true) {
-                        alert('Ответ верный! Вы молодец!')
+                    if (result == 'true') {
+                    	counter += 1
+                        // alert('Ответ верный! Вы молодец!')
                     }
                     else {
-                        alert('Ответ неверный((')
+                        // alert('Ответ неверный((')
                     }
 
                 } catch (error) {
