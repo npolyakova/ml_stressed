@@ -1,184 +1,180 @@
 <!doctype html>
 <html lang="ru">
-	<head>
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Тренажер "Мастер ударений"</title>
-			<link rel="stylesheet" href="/styles.css">
- 	</head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тренажер "Мастер ударений"</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 
-	<body>
-			<header>
-					<h1 style="padding-top: 50px">Мастер ударений</h1>
-					<hr>
-			</header>
-					<p id="scores1">1/20</p>
-					<h1 id="word">красивее</h1>
+<body>
+<header>
+  <h1 style="padding-top: 50px">Мастер ударений</h1>
+  <hr>
+</header>
 
-			<section>
-					<center>
-					<button id="startButton" class="knopka">ЗАПИСЬ</button>
-					<button id="stopButton" class="knopka" disabled>СТОП</button>
-					</center>
-			</section>
-			<div id="loading" style="display: none;">Загрузка...</div>
-	<!-- СКРИПТ ДЛЯ ПОЛУЧЕНИЯ СПИСКА СЛОВ С СЕРВЕРА-->
-	<script>
-        let words = [];
+<p id="scores1">1/20</p>
+<h1 id="word">красивее</h1>
 
-        // Функция для получения списка слов с сервера
-        async function fetchWords() {
-            try {
-                const response = await fetch('http://127.0.0.1:8000/api/words',{"mode":"no-cors"}); // Заменить на наш URL
-                if (!response.ok) {
-                    throw new Error('Сеть ответила с ошибкой');
-                }
+<section>
+  <center>
+    <button id="startButton" class="knopka">ЗАПИСЬ</button>
+    <button id="stopButton" class="knopka" disabled>СТОП</button>
+  </center>
+</section>
 
-                json = await response.json();
-                words = json["words"]
-            } catch (error) {
-                console.error('Ошибка при получении слов:', error);
-            }
+<!-- Индикатор загрузки -->
+<div id="loading" style="display: none;">Загрузка...</div>
+
+<script>
+  let words = [];
+
+  // Функция для получения списка слов с сервера
+  async function fetchWords() {
+    try {
+      // Пример запроса: fetch('http://127.0.0.1:8000/api/words', { mode:"no-cors" });
+      // Замените на ваш реальный эндпоинт/опции
+      const response = await fetch('http://127.0.0.1:8000/api/words', { "mode":"no-cors" });
+      if (!response.ok) {
+        throw new Error('Сеть ответила с ошибкой');
+      }
+      const json = await response.json();
+      words = json["words"];
+    } catch (error) {
+      console.error('Ошибка при получении слов:', error);
+    }
+  }
+
+  console.log(words);
+
+  // Функция для смены слова (если надо случайное — используйте randomIndex)
+  function changeWord() {
+    if (words.length === 0) {
+      alert('Список слов пуст. Пожалуйста, попробуйте позже.');
+      return;
+    }
+    const randomIndex = Math.floor(Math.random() * words.length);
+    document.getElementById('word').innerText = words[randomIndex];
+  }
+
+  // Получаем слова при загрузке страницы
+  window.onload = fetchWords;
+
+  // Счётчик, чтобы показать 20 слов
+  let currentScore = 1;
+  // Счётчик правильных ответов (если нужно)
+  let counter = 0;
+
+  let mediaRecorder;
+  let audioChunks = [];
+  let audioBlob;
+  let audioStream;
+
+  // Кнопка "ЗАПИСЬ"
+  document.getElementById("startButton").onclick = async() => {
+    // Запрашиваем доступ к микрофону
+    audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(audioStream);
+
+    mediaRecorder.ondataavailable = event => {
+      audioChunks.push(event.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      audioChunks = []; // Очистка массива для следующей записи
+      console.log('Аудио записано:', audioBlob);
+      // Здесь по логике мы покажем индикатор — но в данном случае будем показывать его после "СТОП"
+    };
+
+    mediaRecorder.start();
+    document.getElementById('startButton').disabled = true;
+    document.getElementById("stopButton").disabled = false; // Включаем кнопку "СТОП"
+
+    if (currentScore > 20) {
+      alert(counter);
+      currentScore = 1; // Сброс, если это нужно
+    }
+  };
+
+  // Обновление слова по счётчику
+  function updateWord() {
+    // Если слов меньше, чем 20, подстрахуйтесь, что не выйдет за границы массива
+    if (words.length === 0) return; // если вдруг массив пустой
+    if (currentScore - 1 < words.length) {
+      document.getElementById("word").innerText = words[currentScore - 1];
+    }
+    // Если нужно случайное слово, вместо index можно использовать
+    // случайный индекс, как в changeWord().
+  }
+
+  // Кнопка "СТОП"
+  document.getElementById("stopButton").onclick = async() => {
+    // Останавливаем запись
+    mediaRecorder.stop();
+    // Отключаем микрофон
+    audioStream.getTracks().forEach(track => track.stop());
+
+    // Показываем «загрузка», скрываем слово и отключаем все кнопки
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('word').style.display = 'none';
+    document.getElementById('startButton').disabled = true;
+    document.getElementById('stopButton').disabled = true;
+
+    // Подготавливаем данные для отправки
+    let form = new FormData();
+    form.append('file', audioBlob);
+
+    try {
+      // Отправка записи на сервер
+      // Замените URL и опции на свои
+      const response = await fetch(
+        'http://127.0.0.1:8000/uploadfile?word=' + (words[currentScore - 1] || ''),
+        {
+          "mode":"no-cors",
+          "method": 'POST',
+          "body": form,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': undefined
+          },
         }
+      );
+      if (!response.ok) {
+        throw new Error('Сеть ответила с ошибкой');
+      }
+      const json = await response.json();
+      const result = json["Result"];
+      if (result === 'true') {
+        counter += 1;
+      }
+    } catch (error) {
+      console.error('Ошибка при записи:', error);
+    }
 
-        console.log(words)
+    // Запускаем 5-секундный таймер отображения «загрузки»
+    setTimeout(() => {
+      // Скрываем «загрузка»
+      document.getElementById('loading').style.display = 'none';
 
-        // Функция для смены слова
-        function changeWord() {
-            if (words.length === 0) {
-                alert('Список слов пуст. Пожалуйста, попробуйте позже.');
-                return;
-            }
-            const randomIndex = Math.floor(Math.random() * words.length);
-            document.getElementById('word').innerText = words[randomIndex];
-        }
+      // Увеличиваем счётчик, если не превысили лимит
+      if (currentScore <= 20) {
+        currentScore++;
+        document.getElementById("scores1").innerText = currentScore + "/20";
+      }
 
-        // Обработчик события для кнопки
-        document.getElementById('stopButton').addEventListener('click', changeWord);
+      // Обновляем следующее слово (теперь снова покажем)
+      updateWord();
+      document.getElementById('word').style.display = 'block';
 
-        // Получаем слова при загрузке страницы
-        window.onload = fetchWords;
+      // Включаем кнопку «ЗАПИСЬ» для следующего цикла
+      if (currentScore <= 20) {
+        document.getElementById('startButton').disabled = false;
+      }
 
-		//СКРИПТ ДЛЯ СЧЕТЧИКА
+    }, 5000);
+  };
+</script>
 
-        let currentScore = 1; // Начальное значение счетчика
-
-        let mediaRecorder;
-        let audioChunks = [];
-        let audioBlob;
-        let audioStream;
-        let counter = 0;
-
-
-        document.getElementById("startButton").onclick = async() => {
-			 // Запрашиваем доступ к микрофону
-			audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(audioStream);
-
-
-            mediaRecorder.ondataavailable = event => {
-                audioChunks.push(event.data);
-            };
-
-            mediaRecorder.onstop = () => {
-                audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                audioChunks = []; // Очистка массива для следующей записи
-                console.log('Аудио записано:', audioBlob);
-                document.getElementById('loading').style.display = 'block';
-            };
-
-            mediaRecorder.start();
-            document.getElementById('startButton').disabled = true;
-
-            document.getElementById("stopButton").disabled = false; // Включаем кнопку "СТОП"
-			if (currentScore >= 20) {
-				alert(counter)
-				currentScore = 0; // Сбрасываем счетчик
-			}
-        };
-
-        function updateWord() {
-            if (currentScore <= words.length) {
-                console.log(words.length)
-                console.log(words[currentScore - 1])
-                document.getElementById("word").innerText = words[currentScore - 1]; // Обновляем слово по текущему счетчику
-            }
-        }
-
-        document.getElementById("stopButton").onclick = async() => {
-			mediaRecorder.stop();
-
-            // Отключаем микрофон
-            audioStream.getTracks().forEach(track => track.stop());
-
-            document.getElementById('startButton').disabled = false;
-            document.getElementById('stopButton').disabled = true;
-
-            // Здесь вы можете отправить audioBlob на сервер
-            // Например, используя fetch:
-            /*
-            const formData = new FormData();
-            formData.append('audio', audioBlob, 'recording.wav');
-
-            fetch('/upload', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error('Ошибка:', error));
-            */
-
-            if (currentScore <= 20) {
-                currentScore++; // Увеличиваем счетчик
-				document.getElementById("scores1").innerText = currentScore + "/20"; // Обновляем текст счетчика
-				console.log(currentScore)
-                if (currentScore > 20) {
-                    this.disabled = true; // Отключаем кнопку "СТОП" после достижения 20
-                }
-
-                let form = new FormData()
-                form.append('file', audioBlob)
-                console.log(form)
-
-                try {
-                    const response = await fetch(
-                        'http://127.0.0.1:8000/uploadfile?word=' + words[currentScore - 1],
-                        {
-                            "mode":"no-cors",
-                            "method": 'POST',
-                            "body": form,
-                            headers: {
-                    			'Accept': 'application/json',
-                    			'Content-Type': undefined
-                			},
-                        }); // Заменить на наш URL
-                    if (!response.ok) {
-                        throw new Error('Сеть ответила с ошибкой');
-                    }
-                    json = await response.json();
-                    result = json["Result"]
-                    if (result == 'true') {
-                    	counter += 1
-                        // alert('Ответ верный! Вы молодец!')
-                    }
-                    else {
-                        // alert('Ответ неверный((')
-                    }
-
-                } catch (error) {
-                    console.error('Ошибка при записи:', error);
-                }
-
-
-                updateWord(); // Обновляем слово
-            }
-        };
-
-	// СКРИПТ ДЛЯ ЗАПИСИ И ОТПРАВКИ НА СЕРВЕР
-
-
-    </script>
-
-	</body>
+</body>
 </html>
