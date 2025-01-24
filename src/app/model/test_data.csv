@@ -78,7 +78,7 @@ resources/vodoprovOd/validation/test_2.mp3;Водопровод
 resources/vodoprovOd/validation/test_3.wav;ВодопрОвод
 resources/zakUporit/validation/test_1.mp3;Закупорить
 resources/zakUporit/validation/test_2.mp3;ЗакупОрить
-resources/zakUporit/validation/test_3.mp3;ЗакупОрить
+resources/zakUporit/validation/test_3.wav;ЗакупОрить
 resources/zvonIt/validation/test_1.mp3;Звонит
 resources/zvonIt/validation/test_2.mp3;ЗвОнит
-resources/zvonIt/validation/test_3.mp3;ЗвОнит
+resources/zvonIt/validation/test_3.wav ;ЗвОнит

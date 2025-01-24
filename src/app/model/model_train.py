@@ -71,7 +71,7 @@ training_args = Seq2SeqTrainingArguments(
     gradient_accumulation_steps=1,  # increase by 2x for every 2x decrease in batch size
     learning_rate=1e-5,
     warmup_steps=5,
-    max_steps=1,
+    max_steps=20,
     gradient_checkpointing=True,
     fp16=True,
     eval_strategy="steps",
@@ -82,7 +82,7 @@ training_args = Seq2SeqTrainingArguments(
     eval_steps=10,
     logging_steps=5,
     report_to=["tensorboard"],
-    load_best_model_at_end=True,
+    load_best_model_at_end=False,
     metric_for_best_model="wer",
     greater_is_better=False,
     push_to_hub=True,
@@ -104,15 +104,5 @@ trainer = Seq2SeqTrainer(
 
 trainer.train()
 
-kwargs = {
-    "dataset_tags": "mozilla-foundation/common_voice_11_0",
-    "dataset": "Common Voice RuSS",  # a 'pretty' name for the training dataset
-    "dataset_args": "config: hi, split: test",
-    "language": "hi",
-    "model_name": "Whisper Small Hi - TigrulyaCat",  # a 'pretty' name for your model
-    "finetuned_from": "openai/whisper-small",
-    "tasks": "automatic-speech-recognition",
-}
-
 #tokenizer.push_to_hub("TigrulyaCat/whisper-small-hi")
-trainer.push_to_hub(**kwargs)
+trainer.push_to_hub()

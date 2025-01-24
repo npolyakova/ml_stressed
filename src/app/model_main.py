@@ -9,5 +9,5 @@ model = AutoModelForSpeechSeq2Seq.from_pretrained("TigrulyaCat/whisper-small-hi"
 
 pipe = pipeline("automatic-speech-recognition", model="TigrulyaCat/whisper-small-hi")
 
-result = pipe("resources/aeropOrty/validation/test_1.mp3", generate_kwargs={"language": "russian"})
+result = pipe("model/resources/aeropOrty/validation/test_4.mp3", generate_kwargs={"language": "russian"})
 print(result["text"])

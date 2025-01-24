@@ -27,6 +27,21 @@ resources/aeropOrty/train_26.mp3;АэропортЫ
 resources/aeropOrty/train_27.mp3;АэропортЫ
 resources/aeropOrty/train_28.mp3;АэропортЫ
 resources/aeropOrty/train_29.mp3;АэропортЫ
+resources/aeropOrty/train_30.wav;Аэропорты
+resources/aeropOrty/train_31.wav;Аэропорты
+resources/aeropOrty/train_32.wav;Аэропорты
+resources/aeropOrty/train_33.wav;Аэропорты
+resources/aeropOrty/train_34.wav;Аэропорты
+resources/aeropOrty/train_35.wav;Аэропорты
+resources/aeropOrty/train_36.wav;Аэропорты
+resources/aeropOrty/train_37.wav;Аэропорты
+resources/aeropOrty/train_38.wav;Аэропорты
+resources/aeropOrty/train_39.wav;Аэропорты
+resources/aeropOrty/train_40.wav;Аэропорты
+resources/aeropOrty/train_41.wav;Аэропорты
+resources/aeropOrty/train_42.wav;Аэропорты
+resources/aeropOrty/train_43.wav;Аэропорты
+resources/aeropOrty/train_44.wav;Аэропорты
 resources/deshevIzna/train_2.mp3;Дешевизна
 resources/deshevIzna/train_3.mp3;Дешевизна
 resources/deshevIzna/train_4.mp3;Дешевизна
@@ -456,9 +471,9 @@ resources/prinyatA/train_14.mp3;ПрИнята
 resources/prinyatA/train_15.mp3;ПрИнята
 resources/prinyatA/train_16.mp3;ПрИнята
 resources/prinyatA/train_17.mp3;Принята
-resources/prinyatA/train_18.mp3;ПрИнята
-resources/prinyatA/train_19.mp3;ПрИнята
-resources/prinyatA/train_20.mp3;ПрИнята
+resources/prinyatA/train_18.wav;ПрИнята
+resources/prinyatA/train_19.wav;ПрИнята
+resources/prinyatA/train_20.wav;ПрИнята
 resources/prinyatA/train_21.wav;ПрИнята
 resources/prinyatA/train_22.wav;ПрИнята
 resources/prinyatA/train_23.wav;ПрИнята
@@ -491,7 +506,6 @@ resources/slIvovyi/train_17.mp3;СливОвый
 resources/slIvovyi/train_18.mp3;СливОвый
 resources/slIvovyi/train_19.mp3;СливОвый
 resources/slIvovyi/train_20.mp3;СливОвый
-resources/slIvovyi/train_20.wav;СливОвый
 resources/slIvovyi/train_21.wav;СливОвый
 resources/slIvovyi/train_22.wav;СливОвый
 resources/slIvovyi/train_23.wav;СливОвый
@@ -637,6 +651,7 @@ resources/vodoprovOd/train_16.wav;ВодопрОвод
 resources/vodoprovOd/train_17.wav;ВодопрОвод
 resources/vodoprovOd/train_18.wav;ВодопрОвод
 resources/vodoprovOd/train_19.wav;ВодопрОвод
+resources/vodoprovOd/train_20.wav;ВодопрОвод
 resources/vodoprovOd/train_21.wav;ВодопрОвод
 resources/vodoprovOd/train_22.wav;ВодопрОвод
 resources/vodoprovOd/train_23.wav;ВодопрОвод
@@ -644,7 +659,7 @@ resources/vodoprovOd/train_24.wav;ВодопрОвод
 resources/vodoprovOd/train_25.wav;ВодопрОвод
 resources/vodoprovOd/train_26.wav;ВодопрОвод
 resources/vodoprovOd/train_27.wav;ВодопрОвод
-resources/vodoprovOd/train_28.wav;ВодопрОвод
+resources/vodoprovOd/train_28.mp3;Водопровод
 resources/zakUporit/train_1.mp3;Закупорить
 resources/zakUporit/train_2.mp3;Закупорить
 resources/zakUporit/train_3.mp3;Закупорить
@@ -701,7 +716,6 @@ resources/zvonIt/train_24.wav;ЗвОнит
 resources/zvonIt/train_25.wav;ЗвОнит
 resources/zvonIt/train_26.wav;ЗвОнит
 resources/zvonIt/train_27.wav;ЗвОнит
-resources/zvonIt/train_28.wav;ЗвОнит
 resources/zvonIt/train_29.wav;ЗвОнит
 resources/zvonIt/train_30.mp3;ЗвОнит
 resources/zvonIt/train_31.mp3;Звонит
