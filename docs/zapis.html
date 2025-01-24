@@ -24,7 +24,7 @@
 </section>
 
 <!-- Индикатор загрузки -->
-<div id="loading" style="display: none;">Загрузка...</div>
+<div id="loading" style="font-size:35px; font-family:arial; color: #8B4513; display: none;">Загрузка...</div>
 
 <script>
   let words = [];
@@ -91,10 +91,7 @@
     document.getElementById('startButton').disabled = true;
     document.getElementById("stopButton").disabled = false; // Включаем кнопку "СТОП"
 
-    if (currentScore > 20) {
-      alert(counter);
-      currentScore = 1; // Сброс, если это нужно
-    }
+
   };
 
   // Обновление слова по счётчику
@@ -157,8 +154,14 @@
       // Скрываем «загрузка»
       document.getElementById('loading').style.display = 'none';
 
+		if (currentScore >= 20) {
+      		alert('Правильных ответов: ' + counter);
+      		currentScore = 1; // Сброс, если это нужно
+      		return;
+    	}
+
       // Увеличиваем счётчик, если не превысили лимит
-      if (currentScore <= 20) {
+      if (currentScore <= 21) {
         currentScore++;
         document.getElementById("scores1").innerText = currentScore + "/20";
       }
@@ -168,11 +171,11 @@
       document.getElementById('word').style.display = 'block';
 
       // Включаем кнопку «ЗАПИСЬ» для следующего цикла
-      if (currentScore <= 20) {
+      if (currentScore < 21) {
         document.getElementById('startButton').disabled = false;
       }
 
-    }, 5000);
+    }, 1000);
   };
 </script>
 
