@@ -1,5 +1,6 @@
 import aiofiles
 from fastapi import FastAPI, UploadFile
+from python_multipart.multipart import File
 from starlette.responses import FileResponse
 
 from demo_model import return_answer
@@ -13,6 +14,10 @@ def index():
 @app.get("/game")
 def index():
     return FileResponse('../../docs/zapis.html')
+
+@app.get("/styles.css")
+def index():
+    return FileResponse('../../docs/styles.css')
 
 @app.get("/api/words")
 async def get_words():

@@ -1,0 +1,65 @@
+button.knopka {
+	color: #8B4513;
+	background: #DEB887;
+	padding: 50px 120px;
+	font-size: 50px;
+	border-radius: 5px;
+	border: 5px solid #8B4513;
+}
+
+button.knopka:hover {
+	background: #BC8F8F;
+	color: #6A5ACD;
+	border: 7px solid #6A5ACD;
+}
+
+button.knopka:disabled {
+    border: 5px solid #C0C0C0;
+}
+
+button.near {
+    margin-left: auto;
+	margin-right: auto;
+}
+
+body {
+    background-color: #DEB887;
+	grid-template-columns: repeat(1, 1fr);
+	display: grid;
+  	gap: 100px;
+  	text-align: center;
+	justify-content: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 80px;
+    color: #8B4513;
+    font-family: arial;
+}
+
+hr {
+    height: 5px;
+    width: 50%;
+    background: #8B4513;
+    border: 0px;
+}
+
+p {
+    font-size:35px;
+    font-family:arial;
+	color: #8B4513;
+}
+#word {
+    font-size: 80px;
+    margin-bottom: 20px;
+	font-family:arial;
+	text-align:center;
+}
+
+#scores1 {
+    font-size: 80px;
+    color: #8B4513;
+    font-family: arial;
+    text-align: center;
+}
